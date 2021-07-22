@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String [] fruitsArr = {"복숭아", "체리", "딸기"};
+    boolean[] checkArr = {true,false,true};
     int[] imgsArr = {R.drawable.i01, R.drawable.i02, R.drawable.i03};
     Button btnFruits;
     ImageView imgV;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_dialog:
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle(R.string.dialog_title)
-                            .setSingleChoiceItems(fruitsArr,0,fruitsItemListener)
+                            .setMessage(R.string.dialog_message)
                             .setIcon(R.drawable.warning)
                             .setPositiveButton(R.string.btn_positive, btnPositiveListener)
                             .show();
@@ -41,12 +42,19 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_fruits:
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle(R.string.btn_fruits)
-                            .setItems(fruitsArr, fruitsItemListener)
+                            .setMultiChoiceItems(fruitsArr,checkArr,fruitsMultiItemListener)
                             .setIcon(R.drawable.peach)
                             .setPositiveButton("닫기",null)
                             .show();
                     break;
             }
+        }
+    };
+    DialogInterface.OnMultiChoiceClickListener fruitsMultiItemListener = new DialogInterface.OnMultiChoiceClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            btnFruits.setText(fruitsArr[which]);
+            imgV.setImageResource(imgsArr[which]);
         }
     };
     DialogInterface.OnClickListener fruitsItemListener = new DialogInterface.OnClickListener() {
